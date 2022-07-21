@@ -6,7 +6,7 @@ PKG_RELEASE:=$(AUTORELEASE)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/tag/v$(PKG_VERSION)?
-# PKG_HASH:=
+PKG_HASH:=9120e15a93be7f643f3d8b3ba4cfe83e0176784c59df4b0846a2389468b2610a
 
 PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
