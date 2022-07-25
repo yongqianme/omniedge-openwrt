@@ -1,6 +1,6 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=omniedgecli
+PKG_NAME:=omniedge-cli
 PKG_VERSION:=0.2.3
 PKG_RELEASE:=$(AUTORELEASE)
 PKG_ARCH:= armv7
