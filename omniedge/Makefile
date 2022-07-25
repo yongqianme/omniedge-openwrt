@@ -5,8 +5,8 @@ PKG_VERSION:=0.2.3
 PKG_RELEASE:=$(AUTORELEASE)
 PKG_ARCH:= armv7
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_ARCH).zip
-PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/v$(PKG_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://codeload.github.com/omniedgeio/omniedge-cli/tar.gz/v$(PKG_VERSION)
 PKG_HASH:=9120e15a93be7f643f3d8b3ba4cfe83e0176784c59df4b0846a2389468b2610a
 
 PKG_BUILD_DEPENDS:=golang/host
