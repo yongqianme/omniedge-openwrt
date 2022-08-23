@@ -19,6 +19,7 @@ GO_PKG:=https://github.com/yongqianme/omniedge-cli
 GO_PKG_BUILD_PKG:=https://github.com/yongqianme/omniedge-cli/out/
 GO_PKG_LDFLAGS:=
 GO_PKG_LDFLAGS_X:=main.Env=${BUILD_ENV}
+CGO_ENABLED:=1
 
 
 include $(INCLUDE_DIR)/package.mk
@@ -33,23 +34,14 @@ define Package/omniedge
   DEPENDS:=$(GO_ARCH_DEPENDS)
 endef
 
-# Package description; a more verbose description on what our package does
 define Package/omniedge/description
   A simple "Hello, world!" -application.
 endef
 
-# Package preparation instructions; create the build directory and copy the source code.
-# The last command is necessary to ensure our preparation instructions remain compatible with the patching system.
 define Build/Prepare
     go.sum generate
     rm -rf ./out
 endef
-  
-# Package build instructions; invoke the target-specific compiler to first compile the source file, and then to link the file into the final executable
-define Build/Compile
-    $(TARGET_CC) $(TARGET_CXX) CGO_ENABLED=1 go build -ldflags "-X main.Env=${BUILD_ENV}" -o out/omniedge cmd/edgecli/main.go
-endef
-
 
 define Package/omniedge/install
 	$(call GoPackage/Package/Install/Bin,$(PKG_INSTALL_DIR))
