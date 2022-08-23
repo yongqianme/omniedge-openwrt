@@ -20,17 +20,21 @@ jobs:
       - name: Install build requirements
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential ccache ecj fastjar file g++ gawk \
-          gettext git java-propose-classpath libelf-dev libncurses5-dev \
-          libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget \
-          python3-distutils python3-setuptools python3-dev rsync subversion \
-          swig time xsltproc zlib1g-dev
+          sudo apt-get install -y build-essential autoconf openssl gzip libssl-dev zip upx -y 
 
       - name: Install OpenWrt SDK
         run: |
           wget -O openwrt-sdk.tar.xz ${{ matrix.target.sdk }}
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
           mv -f openwrt-sdk-* openwrt-sdk
+      - name: Prepare Environment Variable
+        run: |
+          export TARGET_CC=./openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc
+          export TARGET_CXX=./openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-g++
+          export CGO_ENABLED=1 
+          export GOOS=linux 
+          export GOARCH=arm
+          
       - name: Build Package
         run: |
           echo "src-link omniedge $GITHUB_WORKSPACE" > openwrt-sdk/feeds.conf
