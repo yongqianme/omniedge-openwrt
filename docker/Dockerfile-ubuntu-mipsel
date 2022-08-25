@@ -1,8 +1,9 @@
-#golang:armv7
+
+#golang:mipsel
+# mipsel_24kc
 FROM golang:buster@sha256:4c5a1dead04f13777610d1691ae6e4a376a2a1d938a6ef40d1f25815c3eb20d1
 
-# arm_cortex-a7_neon-vfpv4
-ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/22.03.0-rc5/targets/ipq40xx/generic/openwrt-sdk-22.03.0-rc5-ipq40xx-generic_gcc-11.2.0_musl_eabi.Linux-x86_64.tar.xz
+ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/22.03.0-rc5/targets/ramips/mt7621/openwrt-toolchain-22.03.0-rc5-ramips-mt7621_gcc-11.2.0_musl.Linux-x86_64.tar.xz
 
 # install golang
 RUN apt update
@@ -26,3 +27,5 @@ ENV GOARCH=arm
 RUN go generate ./...
 RUN BUILD_ENV=$BUILD_ENV make build
 RUN upx -9 -k /app/out/omniedge
+
+

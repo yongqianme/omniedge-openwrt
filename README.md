@@ -2,6 +2,8 @@
 
 OpenWrt package for [omniedge](https://github.com/omniedgeio/omniedge)
 
+[arm_cortex-a7_neon-vfpv4](https://openwrt.org/docs/techref/instructionset/arm_cortex-a7_neon-vfpv4)
+
 ## Usage
 
 After installing the package, login with the SECURITY_KEY and join the virtual network:

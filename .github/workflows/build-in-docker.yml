@@ -14,7 +14,7 @@ jobs:
       TAG: ${{ github.event.inputs.tag }}
     strategy:
       matrix:
-        platform: [arm ]
+        platform: [arm,386,amd64,arm64 ]
     runs-on: ubuntu-latest
     steps:
       - name: setup env to prod if tag is not empty
@@ -73,14 +73,7 @@ jobs:
             arm)
             echo "DOCKER_PLATFORM=linux/arm/v7" >> $GITHUB_ENV
             ;;
-            ppc64le)
-            echo "DOCKER_PLATFORM=linux/ppc64le" >> $GITHUB_ENV
-            ;;
-            s390x)
-            echo "DOCKER_PLATFORM=linux/s390x" >> $GITHUB_ENV
-            ;;
           esac
-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
