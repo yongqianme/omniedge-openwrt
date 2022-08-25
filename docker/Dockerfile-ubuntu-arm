@@ -10,7 +10,7 @@ RUN apt -y install build-essential autoconf openssl gzip libssl-dev zip upx
 RUN wget -O openwrt-sdk.tar.xz ${OPENWRT_SDK}
 RUN xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
 RUN mv -f openwrt-sdk-* openwrt-sdk
-RUN git clone https://github.com/yongqianme/omniedge-cli /app
+RUN git clone -b dev https://github.com/yongqianme/omniedge-cli /app
 
 WORKDIR /app
 
