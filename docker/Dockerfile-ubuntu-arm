@@ -16,12 +16,12 @@ RUN git clone -b dev https://github.com/yongqianme/omniedge-cli /app
 
 WORKDIR /app
 RUN pwd && ls
-RUN ./openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc -v
+RUN /go/openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc -v
 # COPY . .
 ARG BUILD_ENV
 
-ENV CC=../openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc
-ENV CXX=../openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-g++
+ENV CC=/go/openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc
+ENV CXX=/go/openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-g++
 ENV CGO_ENABLED=1 
 ENV GOARCH=arm
 RUN CC -v && CXX -v
