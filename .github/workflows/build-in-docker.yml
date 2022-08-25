@@ -109,10 +109,10 @@ jobs:
           docker run --name omniedge -t -d cli:0.1
       - name: copy file
         run: |
-          docker cp omniedge:/app/out/omniedge .
+          docker cp omniedge:/app/out/omniedge ./omniedge-cli
       - name: zip
         run: |
-          zip -j ./omniedge-${{ github.ref_name }}-${{ matrix.platform }}.zip ./omniedge
+          zip -j ./omniedge-${{ github.ref_name }}-${{ matrix.platform }}.zip ./omniedge-cli
       
       - name: setup prerelease
         run: |
