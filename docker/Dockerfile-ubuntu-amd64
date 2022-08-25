@@ -1,7 +1,7 @@
 #golang:amd64
 FROM amd64/golang:1.18
 
-ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/22.03.0-rc5/targets/x86/64/openwrt-toolchain-22.03.0-rc5-x86-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/22.03.0-rc5/targets/x86/64/openwrt-sdk-22.03.0-rc5-x86-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
 
 # install golang
 RUN apt update
