@@ -10,17 +10,17 @@ RUN apt -y install build-essential autoconf openssl gzip libssl-dev zip upx
 RUN wget -O openwrt-sdk.tar.xz ${OPENWRT_SDK}
 RUN xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
 RUN mv -f openwrt-sdk-* openwrt-sdk
+RUN git clone https://github.com/yongqianme/omniedge-cli /app
 
 WORKDIR /app
 
 # COPY . .
 ARG BUILD_ENV
 
-ENV CC=./../openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc
-ENV CXX=./../openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-g++
+ENV CC=../openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc
+ENV CXX=../openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-g++
 ENV CGO_ENABLED=1 
 ENV GOARCH=arm
-RUN git clone https://github.com/yongqianme/omniedge-cli
-RUN cd omniedge-cli
-RUN go generate
+
+RUN go generate ./...
 RUN BUILD_ENV=$BUILD_ENV make build
