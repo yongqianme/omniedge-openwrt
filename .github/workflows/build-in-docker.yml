@@ -105,7 +105,7 @@ jobs:
           docker cp omniedge:/app/out/omniedge ./omniedge-cli
       - name: zip
         run: |
-          zip -j ./omniedge-${{ github.ref_name }}-${{ matrix.platform }}.zip ./omniedge-cli
+          zip -j ./omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip ./omniedge-cli
       
       - name: setup prerelease
         run: |
@@ -120,7 +120,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN}}
           files: |
-            omniedge-${{ github.ref_name }}-${{ matrix.platform }}.zip
+            omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip
           tag_name: ${{ env.TAG }}
 
       - name: Create Release
@@ -141,6 +141,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: omniedge-${{ github.ref_name }}-${{ matrix.platform }}.zip
-          asset_name: omniedge-${{ github.ref_name }}-${{ matrix.platform }}.zip
+          asset_path: omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip
+          asset_name: omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip
           asset_content_type: application/zip
