@@ -24,3 +24,4 @@ ENV CGO_ENABLED=1
 ENV GOARCH=arm
 RUN go generate ./...
 RUN BUILD_ENV=$BUILD_ENV make build
+RUN upx -9 -k /app/out/omniedge
