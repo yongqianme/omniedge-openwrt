@@ -2,7 +2,7 @@ name: Compile omniedge for openwrt
 
 on:
   push:
-    branches: [ build-ipk ]
+    branches: [ main ]
     tags: [ 'v*' ]
   pull_request:
 
@@ -13,14 +13,14 @@ jobs:
     strategy:
       matrix:
         target:
-          - arch: "mips"
+          - arch: "mipsle"
           - sdk: "https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
     steps:
       - uses: actions/checkout@v2
       - name: Install build requirements
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential autoconf openssl gzip libssl-dev zip upx -y 
+          sudo apt-get install -y wget build-essential autoconf openssl gzip libssl-dev zip upx -y 
 
       - name: Install OpenWrt SDK
         run: |
