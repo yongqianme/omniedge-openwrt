@@ -26,6 +26,13 @@ endef
 define Package/omniedge/description
 	Bring everything into intranet.
 endef
+define Build/Compile
+	true
+endef
+
+define Build/Configure
+	true
+endef
 
 define Package/omniedge/install
 	$(INSTALL_DIR) $(1)/usr/bin
