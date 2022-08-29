@@ -37,7 +37,7 @@ endef
 
 define Package/omniedge/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_DATA) $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION) $$(1)/usr/bin/omniedge
+	$(INSTALL_DATA) $(BUILD_DIR)/omniedge $$(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,omniedge))
