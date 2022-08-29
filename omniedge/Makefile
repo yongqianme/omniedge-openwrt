@@ -6,7 +6,7 @@ PKG_RELEASE:=$(AUTORELEASE)
 PKG_ARCH:= mipsle
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-openwrt-$(PKG_ARCH).zip
-PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/v0.2.3/omniedge-0.2.3-openwrt-mipsle.zip
+PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/v0.2.3/
 PKG_HASH:=cbc6cbb1b68447e89766576fd54b8dd82fdeb0527cd3339ca613c18c0de1421a
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
