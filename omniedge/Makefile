@@ -36,7 +36,8 @@ define Build/Configure
 endef
 
 define Package/omniedge/install
-	$(PKG_BUILD_DIR) $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/omniedge $$(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,omniedge))
