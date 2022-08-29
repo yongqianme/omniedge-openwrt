@@ -13,6 +13,8 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
 PKG_LICENSE:=GPL-3.0
 
+include $(INCLUDE_DIR)/package.mk
+
 define Package/omniedge
   SECTION:=net
   CATEGORY:=Network
