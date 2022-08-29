@@ -25,12 +25,7 @@ define Package/omniedge/description
   Bring everything into intranet.
 endef
 
-define Build/Compile
-	true
-endef
-
 define Package/omniedge/install
-	
   $(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omniedge $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d/
