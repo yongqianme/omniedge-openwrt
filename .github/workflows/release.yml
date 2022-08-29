@@ -2,7 +2,7 @@ name: Compile omniedge for openwrt
 
 on:
   push:
-    branches: [ main ]
+    branches: [ build-ipk ]
     tags: [ 'v*' ]
   pull_request:
 
@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - arch: "ar71xx-generic"
+          - arch: "mips"
           - sdk: "https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
     steps:
       - uses: actions/checkout@v2
