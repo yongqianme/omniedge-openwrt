@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build - ${{ matrix.target.arch }}
+    name: Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
