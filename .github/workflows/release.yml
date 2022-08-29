@@ -10,11 +10,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target:
-          - arch: "mipsle"
-          - sdk: "https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
     steps:
       - uses: actions/checkout@v2
       - name: Install build requirements
@@ -24,7 +19,7 @@ jobs:
 
       - name: Install OpenWrt SDK
         run: |
-          wget -O openwrt-sdk.tar.xz ${{ matrix.target.sdk }}
+          wget -O openwrt-sdk.tar.xz https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
           mv -f openwrt-sdk-* openwrt-sdk    
       - name: Build Package
