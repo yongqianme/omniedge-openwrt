@@ -16,24 +16,23 @@ PKG_LICENSE:=GPL-3.0
 include $(INCLUDE_DIR)/package.mk
 
 define Package/omniedge
-	SECTION:=net
-	CATEGORY:=Network
-  	SUBMENU:=VPN
-  	TITLE:=Bring intranet on the internet.What happens in intranet, stays in in intranet
-	URL:=https://github.com/omniedgeio/omniedge
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=VPN
+  TITLE:=Bring intranet on the internet.What happens in intranet, stays in in intranet
+  URL:=https://github.com/omniedgeio/omniedge
 endef
 
 define Package/omniedge/description
-	Bring everything into intranet.
+  Bring everything into intranet.
 endef
 
 define Package/omniedge/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omniedge $(1)/usr/bin/
-	$(INSTALL_DIR) $(1)/etc/init.d/
-	$(INSTALL_BIN) $(CURDIR)/files/omniedge.init $(1)/etc/init.d/omniedge
-  	$(CP) ./files/* $(1)
+  $(INSTALL_DIR) $(1)/usr/bin
+  $(INSTALL_BIN) $(PKG_BUILD_DIR)/omniedge $(1)/usr/bin/
+  $(INSTALL_DIR) $(1)/etc/init.d/
+  $(INSTALL_BIN) $(CURDIR)/files/omniedge.init $(1)/etc/init.d/omniedge
+  $(CP) ./files/* $(1)
 endef
 
 $(eval $(call BuildPackage,omniedge))
-	
