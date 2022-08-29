@@ -13,8 +13,8 @@ jobs:
     strategy:
       matrix:
         target:
-          - arch: "arm_cortex-a7_neon-vfpv4"
-            sdk: "https://downloads.openwrt.org/releases/22.03.0-rc5/targets/ipq40xx/generic/openwrt-sdk-22.03.0-rc5-ipq40xx-generic_gcc-11.2.0_musl_eabi.Linux-x86_64.tar.xz"
+          - arch: "ar71xx-generic"
+          - sdk: "https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
     steps:
       - uses: actions/checkout@v2
       - name: Install build requirements
@@ -26,15 +26,7 @@ jobs:
         run: |
           wget -O openwrt-sdk.tar.xz ${{ matrix.target.sdk }}
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
-          mv -f openwrt-sdk-* openwrt-sdk
-      - name: Prepare Environment Variable
-        run: |
-          export TARGET_CC=./openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc
-          export TARGET_CXX=./openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-g++
-          export CGO_ENABLED=1 
-          export GOOS=linux 
-          export GOARCH=arm
-          
+          mv -f openwrt-sdk-* openwrt-sdk    
       - name: Build Package
         run: |
           echo "src-link omniedge $GITHUB_WORKSPACE" > openwrt-sdk/feeds.conf
