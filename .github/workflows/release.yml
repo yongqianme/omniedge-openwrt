@@ -19,7 +19,7 @@ jobs:
 
       - name: Install OpenWrt SDK
         run: |
-          wget -O openwrt-sdk.tar.xz https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+          wget -O openwrt-sdk.tar.xz https://downloads.openwrt.org/releases/22.03.0-rc5/targets/ramips/mt7621/openwrt-toolchain-22.03.0-rc5-ramips-mt7621_gcc-11.2.0_musl.Linux-x86_64.tar.xz
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
           mv -f openwrt-sdk-* openwrt-sdk    
       - name: Build Package
