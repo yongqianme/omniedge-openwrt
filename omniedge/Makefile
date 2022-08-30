@@ -3,11 +3,11 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=omniedge
 PKG_VERSION:=0.2.3
 PKG_RELEASE:=$(AUTORELEASE)
-PKG_ARCH:= arm
+PKG_ARCH:= amd64
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-openwrt-$(PKG_ARCH).zip
 PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/v${PKG_VERSION}/
-PKG_HASH:=a4ebe65e57c179166132baf1660b5f38b2d39328f864f3aeff8c0ca3241f888d
+PKG_HASH:=7dcb138f26a9c0dd8e88a54082677c3e848ea0a99fe344e0d4ee4c2cf4963761
 
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
 PKG_LICENSE:=GPL-3.0

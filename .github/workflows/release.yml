@@ -19,7 +19,7 @@ jobs:
 
       - name: Install OpenWrt SDK
         run: |
-          wget -O openwrt-sdk.tar.xz https://downloads.openwrt.org/releases/22.03.0-rc5/targets/ipq40xx/generic/openwrt-sdk-22.03.0-rc5-ipq40xx-generic_gcc-11.2.0_musl_eabi.Linux-x86_64.tar.xz
+          wget -O openwrt-sdk.tar.xz https://downloads.openwrt.org/releases/22.03.0-rc5/targets/x86/64/openwrt-sdk-22.03.0-rc5-x86-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
           mv -f openwrt-sdk-* openwrt-sdk    
       - name: Build Package
