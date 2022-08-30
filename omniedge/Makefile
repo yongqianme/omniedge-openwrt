@@ -36,7 +36,7 @@ endef
 
 define Package/omniedge/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
+	$(CP) $(BUILD_DIR)/omniedgecli-0.2.3-mips $(1)/usr/bin/omniedge
 endef
 
 $(eval $(call BuildPackage,omniedge))
