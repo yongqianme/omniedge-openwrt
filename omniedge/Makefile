@@ -3,11 +3,11 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=omniedge
 PKG_VERSION:=0.2.3
 PKG_RELEASE:=$(AUTORELEASE)
-PKG_ARCH:= mips
+PKG_ARCH:= arm
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-openwrt-$(PKG_ARCH).zip
 PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/v${PKG_VERSION}/
-PKG_HASH:=cb6c23324311801085ee252708dafaa15e50c30f4f17de377f7f2082c50de752
+PKG_HASH:=a4ebe65e57c179166132baf1660b5f38b2d39328f864f3aeff8c0ca3241f888d
 
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
 PKG_LICENSE:=GPL-3.0
@@ -36,7 +36,7 @@ endef
 
 define Package/omniedge/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(BUILD_DIR)/omniedgecli-0.2.3-mips $(1)/usr/bin/omniedge
+	$(CP) $(BUILD_DIR)/omniedgecli $(1)/usr/bin/omniedge
 endef
 
 $(eval $(call BuildPackage,omniedge))
