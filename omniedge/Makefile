@@ -6,8 +6,8 @@ PKG_RELEASE:=$(AUTORELEASE)
 PKG_ARCH:= mips
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-openwrt-$(PKG_ARCH).zip
-PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/v0.2.3/
-PKG_HASH:=cbc6cbb1b68447e89766576fd54b8dd82fdeb0527cd3339ca613c18c0de1421a
+PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/v${PKG_VERSION}/
+PKG_HASH:=cb6c23324311801085ee252708dafaa15e50c30f4f17de377f7f2082c50de752
 
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
 PKG_LICENSE:=GPL-3.0
