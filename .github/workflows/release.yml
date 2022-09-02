@@ -8,8 +8,17 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build - ${{ matrix.target.arch }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - arch: "arm_cortex-a7_neon-vfpv4"
+            sdk: "https://archive.openwrt.org/releases/21.02.3/targets/ipq40xx/generic/openwrt-sdk-21.02.3-ipq40xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz"
+          - arch: "arm_cortex-a8_vfpv3"
+            sdk: "https://downloads.openwrt.org/releases/21.02.3/targets/sunxi/cortexa8/openwrt-sdk-21.02.3-sunxi-cortexa8_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz"
+          - arch: "arm_cortex-a15_neon-vfpv4"
+            sdk: "https://downloads.openwrt.org/releases/21.02.3/targets/ipq806x/generic/openwrt-sdk-21.02.3-ipq806x-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz"
     steps:
       - uses: actions/checkout@v2
       - name: Install build requirements
@@ -19,7 +28,7 @@ jobs:
 
       - name: Install OpenWrt SDK
         run: |
-          wget -O openwrt-sdk.tar.xz https://downloads.openwrt.org/releases/22.03.0-rc5/targets/x86/generic/openwrt-sdk-22.03.0-rc5-x86-generic_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+          wget -O openwrt-sdk.tar.xz ${{ matrix.target.sdk }}
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
           mv -f openwrt-sdk-* openwrt-sdk    
       - name: Build Package
@@ -45,7 +54,7 @@ jobs:
           if-no-files-found: error
       - name: Upload package to GitHub Release
         uses: svenstaro/upload-release-action@v2
-        if: "startsWith(github.ref, 'refs/tags/')"
+        # if: "startsWith(github.ref, 'refs/tags/')"
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
