@@ -102,10 +102,11 @@ jobs:
           docker run --name omniedge -t -d cli:0.1
       - name: copy file
         run: |
-          docker cp omniedge:/app/out/omniedge ./omniedge
+          mkdir app
+          docker cp omniedge:/app/out/omniedge app/omniedge
       - name: zip
         run: |
-          zip -j ./omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip ./omniedge
+          zip -j ./omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip app/omniedge
 
       - name: Archive package
         uses: actions/upload-artifact@v2
