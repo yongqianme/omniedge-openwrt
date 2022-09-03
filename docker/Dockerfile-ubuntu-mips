@@ -11,7 +11,6 @@ RUN xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
 RUN mv -f openwrt-sdk-* openwrt-sdk && pwd
 RUN git clone -b dev https://github.com/yongqianme/omniedge-cli /app
 
-WORKDIR /app
 RUN pwd && ls
 
 RUN /openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc -v
@@ -22,7 +21,8 @@ ENV CC=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-open
 ENV CXX=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++
 ENV CGO_ENABLED=1 
 ENV GOARCH=mips
-RUN go generate ./...
-RUN GOOS=linux GOARCH=mips GOMIPS=softfloat BUILD_ENV=$BUILD_ENV make build
-RUN upx -9 -k /app/out/omniedge
+RUN cd app && \
+    go generate ./... && \
+    GOOS=linux GOARCH=mips GOMIPS=softfloat BUILD_ENV=$BUILD_ENV make build && \
+    upx -9 -k /app/out/omniedge
 
