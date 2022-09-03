@@ -4,10 +4,6 @@ FROM omniedge/golang-mips:latest
 # mips
 ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
 
-# install golang
-RUN apt update
-RUN apt -y install build-essential autoconf openssl gzip libssl-dev zip upx
-
 RUN wget -O openwrt-sdk.tar.xz ${OPENWRT_SDK}
 RUN xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
 RUN mv -f openwrt-sdk-* openwrt-sdk
