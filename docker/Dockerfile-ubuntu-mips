@@ -17,11 +17,13 @@ RUN /openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt
 COPY . .
 ARG BUILD_ENV
 
+WORKDIR /
+
 ENV CC=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc
 ENV CXX=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++
 ENV CGO_ENABLED=1 
 ENV GOARCH=mips
-RUN cd app && \
+RUN cd /app && ls && \
     go generate ./... && \
     GOOS=linux GOARCH=mips GOMIPS=softfloat BUILD_ENV=$BUILD_ENV make build && \
     upx -9 -k /app/out/omniedge
