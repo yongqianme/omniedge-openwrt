@@ -8,18 +8,18 @@ RUN apk add bash tar wget xz
 RUN bash
 RUN wget -O openwrt-sdk.tar.xz ${OPENWRT_SDK}
 RUN xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
-RUN mv -f openwrt-sdk-* openwrt-sdk
+RUN mv -f openwrt-sdk-* openwrt-sdk && pwd
 RUN git clone -b dev https://github.com/yongqianme/omniedge-cli /app
 
 WORKDIR /app
 RUN pwd && ls
 
-RUN /go/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc -v
+RUN /openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc -v
 COPY . .
 ARG BUILD_ENV
 
-ENV CC=/go/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc
-ENV CXX=/go/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++
+ENV CC=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc
+ENV CXX=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++
 ENV CGO_ENABLED=1 
 ENV GOARCH=mips
 RUN go generate ./...
