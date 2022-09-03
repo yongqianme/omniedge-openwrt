@@ -13,6 +13,7 @@ RUN git clone -b dev https://github.com/yongqianme/omniedge-cli /app
 
 RUN pwd && ls
 
+RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 RUN /openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc -v
 COPY . .
 ARG BUILD_ENV
