@@ -4,8 +4,20 @@ FROM omniedge/golang-mips:latest
 # mips
 WORKDIR /
 ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
-RUN apk add bash tar wget xz
-RUN bash
+RUN BUILD_DEPENDENCIES=" \
+        build-base \
+        git \
+        curl \
+        tar \
+        xz \
+        linux-headers \
+        openssl-dev \
+        bash \
+        autoconf \
+        automake \
+    "; set -x \
+    && apk add ${BUILD_DEPENDENCIES}
+
 RUN wget -O openwrt-sdk.tar.xz ${OPENWRT_SDK}
 RUN xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
 RUN mv -f openwrt-sdk-* openwrt-sdk && pwd
@@ -24,7 +36,7 @@ ENV CC=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-open
 ENV CXX=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++
 ENV CGO_ENABLED=1 
 ENV GOARCH=mips
-RUN cd /app && ls && \
+RUN cd /app && ls && cat internal/make_n2n && \
     go generate ./... && \
     GOOS=linux GOARCH=mips GOMIPS=softfloat BUILD_ENV=$BUILD_ENV make build && \
     upx -9 -k /app/out/omniedge
