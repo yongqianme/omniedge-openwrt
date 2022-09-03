@@ -27,17 +27,14 @@ RUN pwd && ls
 
 RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 RUN /openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc -v
-COPY . .
 ARG BUILD_ENV
-
-WORKDIR /
 
 ENV CC=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc
 ENV CXX=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++
 ENV CGO_ENABLED=1 
 ENV GOARCH=mips
+RUN echo $PATH && go version
 RUN cd /app && ls && cat internal/make_n2n && \
-    go generate ./... && \
     GOOS=linux GOARCH=mips GOMIPS=softfloat BUILD_ENV=$BUILD_ENV make build && \
     upx -9 -k /app/out/omniedge
 
