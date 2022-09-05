@@ -32,32 +32,12 @@ jobs:
         if: ${{ env.TAG }}
         with:
           ref: ${{ env.TAG }}
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          platforms: ${{ env.DOCKER_PLATFORM }}
-          push: false
-          load: true
-          file: docker/Dockerfile-ubuntu-${{ matrix.platform }}
-          build-args: |
-            BUILD_ENV=${{ env.ENVIRONMENT }}
-          tags: cli:0.1
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-      - name: run binfmt
-        run: |
-          docker run --privileged --rm tonistiigi/binfmt --install all
+      - name: Build docker images
+        run: docker build -t local < docker/Dockerfile-ubuntu-${{ matrix.platform }}
 
       - name: run cli
         run: |
-          docker run --name omniedge -t -d cli:0.1
+          docker run --name omniedge -t -d local
       - name: copy file
         run: |
           mkdir app
