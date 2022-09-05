@@ -32,18 +32,6 @@ jobs:
         if: ${{ env.TAG }}
         with:
           ref: ${{ env.TAG }}
-
-      - name: Cache
-        uses: actions/cache@v2
-        env:
-          cache-name: omniedgecli-openwrt-${{ matrix.platform }}
-        with:
-          path: |
-            /tmp/.buildx-cache
-          key: ${{ matrix.platform }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ matrix.platform }}-build-${{ env.cache-name }}
-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
