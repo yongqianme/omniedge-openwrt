@@ -1,31 +1,50 @@
 
-#golang:mipsel
-# mipsel_24kc
-FROM golang:buster@sha256:4c5a1dead04f13777610d1691ae6e4a376a2a1d938a6ef40d1f25815c3eb20d1
+FROM ubuntu:20.04 AS build-env
 
 ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/22.03.0-rc5/targets/ramips/mt7621/openwrt-toolchain-22.03.0-rc5-ramips-mt7621_gcc-11.2.0_musl.Linux-x86_64.tar.xz
 
-# install golang
-RUN apt update
-RUN apt -y install build-essential autoconf openssl gzip libssl-dev zip upx
+ENV TZ=America/New_York
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update
+RUN apt-get install -y wget make curl git autoconf automake build-essential pkg-config openssl gzip libssl-dev zip upx
 
-RUN wget -O openwrt-sdk.tar.xz ${OPENWRT_SDK}
-RUN xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
-RUN mv -f openwrt-sdk-* openwrt-sdk
-RUN git clone -b dev https://github.com/yongqianme/omniedge-cli /app
+WORKDIR /
 
-WORKDIR /app
-RUN pwd && ls
-RUN /go/openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc -v
-# COPY . .
-ARG BUILD_ENV
-
-ENV CC=/go/openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-gcc
-ENV CXX=/go/openwrt-sdk/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-11.2.0_musl_eabi/bin/arm-openwrt-linux-g++
-ENV CGO_ENABLED=1 
-ENV GOARCH=arm
-RUN go generate ./...
-RUN BUILD_ENV=$BUILD_ENV make build
-RUN upx -9 -k /app/out/omniedge
+RUN curl -# -O https://dl.google.com/go/go1.4-bootstrap-20171003.tar.gz
+RUN tar -zxvf go1.4-bootstrap-20171003.tar.gz && \
+    cd go/src/ && \
+    GOOS=linux GOARCH=amd64 ./make.bash
+ENV export GOROOT_BOOTSTRAP=/go
 
 
+WORKDIR /
+RUN export GOROOT_BOOTSTRAP=/go && \
+    mkdir golang && \
+    wget https://go.dev/dl/go1.18.5.src.tar.gz && \
+    mv go1.18.5.src.tar.gz golang/ && cd golang/ && \
+    tar -xvf go1.18.5.src.tar.gz && \
+    cd go/src/ && GOOS=linux GOARCH=mips GOMIPS=softfloat ./make.bash && \
+    cd .. && ls pkg && ls bin
+
+RUN cp -r /golang/go /usr/local/ && \
+    export GOROOT_BOOTSTRAP=/usr/local/go && \
+    export GOROOT=/usr/local/go && \
+    export GOBIN=$GOROOT/bin &&  \
+    export GOPATH=/ && \
+    export PATH=$PATH:$GOBIN:GOPATH/bin && \
+    echo $PATH && go version && \
+    cd / && \
+    wget -O openwrt-sdk.tar.xz ${OPENWRT_SDK} && \
+    xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar && \
+    mv -f openwrt-sdk-* openwrt-sdk && \
+    rm go1.4-bootstrap-20171003.tar.gz && rm openwrt-sdk.tar && \
+    export CC=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc && \ 
+    export CXX=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++ && \
+    export STAGING_DIR=/openwrt-sdk/staging_dir && \
+    git clone -b dev https://github.com/yongqianme/omniedge-cli /app && \
+    cd /app && CGO_ENABLED=1 GOOS=linux GOARCH=mipsle BUILD_ENV=$BUILD_ENV make build && \
+    upx -9 -k /app/out/omniedge
+
+FROM ubuntu:20.04
+RUN mkdir /app
+COPY --from=build-env /app/out/omniedge /app/omniedge

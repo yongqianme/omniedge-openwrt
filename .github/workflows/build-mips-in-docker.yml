@@ -41,8 +41,10 @@ jobs:
       - name: copy file
         run: |
           docker cp omniedge:/app/omniedge ./omniedge
+          ls
       - name: zip
         run: |
+          ls
           zip -j ./omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip ./omniedge
 
       - name: Archive package
