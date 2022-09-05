@@ -37,11 +37,11 @@ jobs:
           set -x
           docker version
           docker build -t local -f docker/Dockerfile-ubuntu-${{ matrix.platform }} .
-          docker run --name omniedge -t -d local
+          docker run --name omniedge -d local
       - name: copy file
         run: |
-          mkdir app
-          docker cp omniedge:/app/out/omniedge app/omniedge
+          mkdir /app
+          docker cp omniedge:/app/omniedge /app/omniedge
       - name: zip
         run: |
           zip -j ./omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip app/omniedge
