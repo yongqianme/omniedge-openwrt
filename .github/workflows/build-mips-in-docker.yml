@@ -14,7 +14,7 @@ jobs:
       TAG: ${{ github.event.inputs.tag }}
     strategy:
       matrix:
-        platform: [mips ]
+        platform: [mips,mipsel ]
     runs-on: ubuntu-latest
     
     steps:
@@ -42,7 +42,6 @@ jobs:
         run: |
           docker cp omniedge:/app/omniedge.zip ./omniedge.zip
           mv ./omniedge.zip ./omniedge-${{ github.ref_name }}-openwrt-${{ matrix.platform }}.zip
-          ls
       - name: Archive package
         uses: actions/upload-artifact@v2
         with:

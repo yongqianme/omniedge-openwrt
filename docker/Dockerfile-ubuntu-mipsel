@@ -1,7 +1,7 @@
 
 FROM ubuntu:20.04 AS build-env
 
-ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/22.03.0-rc5/targets/ramips/mt7621/openwrt-toolchain-22.03.0-rc5-ramips-mt7621_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+ARG OPENWRT_SDK=https://downloads.openwrt.org/releases/22.03.0/targets/ramips/mt7621/openwrt-sdk-22.03.0-ramips-mt7621_gcc-11.2.0_musl.Linux-x86_64.tar.xz
 
 ENV TZ=America/New_York
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -38,11 +38,11 @@ RUN cp -r /golang/go /usr/local/ && \
     xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar && \
     mv -f openwrt-sdk-* openwrt-sdk && \
     rm go1.4-bootstrap-20171003.tar.gz && rm openwrt-sdk.tar && \
-    export CC=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-gcc && \ 
-    export CXX=/openwrt-sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/bin/mips-openwrt-linux-g++ && \
+    export CC=/openwrt-sdk/staging_dir/toolchain-mipsel_24kc_gcc-11.2.0_musl/bin/mipsel-openwrt-linux-gcc && \ 
+    export CXX=/openwrt-sdk/staging_dir/toolchain-mipsel_24kc_gcc-11.2.0_musl/bin/mipsel-openwrt-linux-g++ && \
     export STAGING_DIR=/openwrt-sdk/staging_dir && \
     git clone -b dev https://github.com/yongqianme/omniedge-cli /app && \
-    cd /app && CGO_ENABLED=1 GOOS=linux GOARCH=mipsle BUILD_ENV=$BUILD_ENV make build && \
+    cd /app && CGO_ENABLED=1 GOOS=linux GOARCH=mipsel BUILD_ENV=$BUILD_ENV make build && \
     upx -9 -k /app/out/omniedge
 
 FROM ubuntu:20.04
