@@ -33,7 +33,7 @@ jobs:
         with:
           ref: ${{ env.TAG }}
       - name: Build docker images
-        run: docker build -t local  < .docker/Dockerfile-ubuntu-${{ matrix.platform }}
+        run: cat docker/Dockerfile-ubuntu-${{ matrix.platform }} | docker build -t local .
 
       - name: run cli
         run: |
