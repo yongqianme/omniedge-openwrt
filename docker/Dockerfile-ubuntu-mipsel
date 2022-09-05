@@ -23,7 +23,7 @@ RUN export GOROOT_BOOTSTRAP=/go && \
     wget https://go.dev/dl/go1.18.5.src.tar.gz && \
     mv go1.18.5.src.tar.gz golang/ && cd golang/ && \
     tar -xvf go1.18.5.src.tar.gz && \
-    cd go/src/ && GOOS=linux GOARCH=mipsel GOMIPS=softfloat ./make.bash && \
+    cd go/src/ && GOOS=linux GOARCH=mipsel ./make.bash && \
     cd .. && ls pkg && ls bin
 
 RUN cp -r /golang/go /usr/local/ && \
@@ -38,7 +38,6 @@ RUN cp -r /golang/go /usr/local/ && \
     xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar && \
     mv -f openwrt-sdk-* openwrt-sdk && \
     rm go1.4-bootstrap-20171003.tar.gz && rm openwrt-sdk.tar && \
-    /openwrt-sdk/staging_dir/toolchain-mipsel_24kc_gcc-11.2.0_musl/bin/mipsel-openwrt-linux-gcc -v && \
     export CC=/openwrt-sdk/staging_dir/toolchain-mipsel_24kc_gcc-11.2.0_musl/bin/mipsel-openwrt-linux-gcc && \ 
     export CXX=/openwrt-sdk/staging_dir/toolchain-mipsel_24kc_gcc-11.2.0_musl/bin/mipsel-openwrt-linux-g++ && \
     export STAGING_DIR=/openwrt-sdk/staging_dir && \
