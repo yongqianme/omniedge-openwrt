@@ -23,7 +23,7 @@ RUN export GOROOT_BOOTSTRAP=/go && \
     wget https://go.dev/dl/go1.18.5.src.tar.gz && \
     mv go1.18.5.src.tar.gz golang/ && cd golang/ && \
     tar -xvf go1.18.5.src.tar.gz && \
-    cd go/src/ && GOOS=linux GOARCH=mipsel ./make.bash && \
+    cd go/src/ && GOOS=linux GOARCH=mipsle ./make.bash && \
     cd .. && ls pkg && ls bin
 
 RUN cp -r /golang/go /usr/local/ && \
@@ -43,7 +43,7 @@ RUN cp -r /golang/go /usr/local/ && \
     export CXX=/openwrt-sdk/staging_dir/toolchain-mipsel_24kc_gcc-11.2.0_musl/bin/mipsel-openwrt-linux-g++ && \
     export STAGING_DIR=/openwrt-sdk/staging_dir && \
     git clone -b dev https://github.com/yongqianme/omniedge-cli /app && \
-    cd /app && CGO_ENABLED=1 GOOS=linux GOARCH=mipsel BUILD_ENV=$BUILD_ENV make build && \
+    cd /app && CGO_ENABLED=1 GOOS=linux GOARCH=mipsle BUILD_ENV=$BUILD_ENV make build && \
     upx -9 -k /app/out/omniedge
 
 FROM ubuntu:20.04
