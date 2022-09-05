@@ -25,8 +25,5 @@ ENV CGO_ENABLED=1
 ENV GOARCH=arm
 RUN go generate ./...
 RUN BUILD_ENV=$BUILD_ENV make build
-RUN upx -9 -k /app/out/omniedge && zip -j /app/out/omniedge.zip /app/out/omniedge
+RUN upx -9 -k /app/out/omniedge
 
-FROM ubuntu:20.04
-RUN mkdir /app
-COPY --from=build-env /app/out/omniedge.zip /app/omniedge.zip
