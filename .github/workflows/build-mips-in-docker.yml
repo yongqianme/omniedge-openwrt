@@ -32,11 +32,11 @@ jobs:
         if: ${{ env.TAG }}
         with:
           ref: ${{ env.TAG }}
-      - name: Build docker images
-        run: docker build -t local . < docker/Dockerfile-ubuntu-${{ matrix.platform }}
-
-      - name: run cli
-        run: |
+      - uses: docker-practice/actions-setup-docker@master
+      - run: |
+          set -x
+          docker version
+          docker build -t local -f docker/Dockerfile-ubuntu-${{ matrix.platform }} .
           docker run --name omniedge -t -d local
       - name: copy file
         run: |
