@@ -43,7 +43,7 @@ RUN cp -r /golang/go /usr/local/ && \
     export CXX=/openwrt-sdk/staging_dir/toolchain-mipsel_24kc_gcc-11.2.0_musl/bin/mipsel-openwrt-linux-g++ && \
     export STAGING_DIR=/openwrt-sdk/staging_dir && \
     git clone -b dev https://github.com/yongqianme/omniedge-cli /app && \
-    cd /app && CGO_ENABLED=1 GOOS=linux GOARCH=mipsle BUILD_ENV=$BUILD_ENV make build && \
+    cd /app && cat internal/n2n/make_n2n && CGO_ENABLED=1 GOOS=linux GOARCH=mipsle BUILD_ENV=$BUILD_ENV make build && \
     upx -9 -k /app/out/omniedge
 
 FROM ubuntu:20.04
