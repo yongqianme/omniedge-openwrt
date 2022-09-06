@@ -44,8 +44,10 @@ RUN cp -r /golang/go /usr/local/ && \
     export STAGING_DIR=/openwrt-sdk/staging_dir && \
     git clone -b dev https://github.com/yongqianme/omniedge-cli /app && \
     cd /app && cat internal/make_n2n && CGO_ENABLED=1 GOOS=linux GOARCH=mipsle BUILD_ENV=$BUILD_ENV make build && \
-    upx -9 -k /app/out/omniedge
+    upx -9 -k /app/out/omniedge && \
+    zip -j /app/out/omniedge.zip /app/out/omniedge
 
 FROM ubuntu:20.04
 RUN mkdir /app
 COPY --from=build-env /app/out/omniedge /app/omniedge
+COPY --from=build-env /app/out/omniedge.zip /app/omniedge.zip
