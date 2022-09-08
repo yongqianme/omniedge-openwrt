@@ -1,9 +1,6 @@
 name: build openwrt
-env:
-  TAG: ${{ github.event.inputs.tag }}
 on:
   push:
-    branches: [ main ]
     tags: [ 'v*' ]
   pull_request:
 
@@ -40,15 +37,13 @@ jobs:
           mv -f openwrt-sdk-* openwrt-sdk    
 
       - name: prepare for makefile
-        if: ${{ env.TAG }}
         run: | 
-          wget https://github.com/omniedgeio/omniedge/releases/download/${{ env.TAG }}/omniedge-${{ env.TAG }}-openwrt-${{ matrix.target.arch }}.zip
-          echo "VERSIOIN=$${{ env.TAG }}">> $GITHUB_ENV
+          wget https://github.com/omniedgeio/omniedge/releases/download/${{ github.ref_name }}/omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip
+          echo "VERSIOIN=${{ github.ref_name }}">> $GITHUB_ENV
           echo "ARCH=${{ matrix.target.arch }}">> $GITHUB_ENV
-          echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge-${{ env.TAG }}-openwrt-${{ matrix.target.arch }}.zip)" >> $GITHUB_ENV
+          echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip)" >> $GITHUB_ENV
           
       - name: Build Package
-        if: ${{ env.TAG }}
         run: |
           echo "src-link omniedge $GITHUB_WORKSPACE" > openwrt-sdk/feeds.conf
           echo 'CONFIG_PACKAGE_omniedge=y
