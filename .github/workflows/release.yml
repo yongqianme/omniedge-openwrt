@@ -36,12 +36,16 @@ jobs:
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
           mv -f openwrt-sdk-* openwrt-sdk    
 
-      - name: prepare for makefile
+      - name: download binary
         run: | 
           wget https://github.com/omniedgeio/omniedge/releases/download/${{ github.ref_name }}/omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip
-          echo "VERSIOIN=${{ github.ref_name }}">> $GITHUB_ENV
-          echo "ARCH=${{ matrix.target.arch }}">> $GITHUB_ENV
+          
+      - name: prepare for makefile
+        run: |
+          echo "VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "ARCH=${{ matrix.target.arch }}" >> $GITHUB_ENV
           echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip)" >> $GITHUB_ENV
+          whereis omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip
           
       - name: Build Package
         run: |

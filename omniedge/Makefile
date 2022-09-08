@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=omniedge
-PKG_VERSION:=$$(version)
+PKG_VERSION:=$$(VERSION)
 PKG_RELEASE:=$(AUTORELEASE)
 PKG_ARCH:= $$(ARCH)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-openwrt-$(PKG_ARCH).zip
-PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/${PKG_VERSION}/
+PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge/releases/download/${PKG_VERSION}/${PKG_SOURCE}
 PKG_HASH:=$$(HASH256)
 
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
