@@ -42,11 +42,11 @@ jobs:
           
       - name: prepare for makefile
         run: |
-          echo "VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "OMNIEDGE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
           echo "ARCH=${{ matrix.target.arch }}" >> $GITHUB_ENV
           echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip)" >> $GITHUB_ENV
           whereis omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip
-          
+
       - name: Build Package
         run: |
           echo "src-link omniedge $GITHUB_WORKSPACE" > openwrt-sdk/feeds.conf
