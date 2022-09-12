@@ -48,14 +48,13 @@ define Build/Compile
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
 	cd omniedge-cli && ls && CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
 	ls omniedge-cli/out
-	ls $(BUILD_DIR)
-    cp omniedge-cli/out/omniedge $(BUILD_DIR)/
+	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/
 endef
 
 
-define Build/Configure
-	true
-endef
+# define Build/Configure
+# 	true
+# endef
 
 
 define Package/omniedge/install
@@ -70,4 +69,4 @@ define Package/omniedge/install
 	$(CP) $(CURDIR)/files/omniedge $(1)/etc/
 endef
 
-	$(eval $(call BuildPackage,omniedge))
+$(eval $(call BuildPackage,omniedge))
