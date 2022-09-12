@@ -45,7 +45,8 @@ endef
 define Build/Compile
     CXX="$(TARGET_CROSS)g++"
 	CC="$(TARGET_CROSS)gcc"
-	CGO_ENABLED=1 CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV) make build
+	pwd
+	CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
 endef
 
 
