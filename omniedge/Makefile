@@ -49,7 +49,7 @@ define Build/Compile
 	cd omniedge-cli && ls && CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
 	ls omniedge-cli/out
 	ls $(BUILD_DIR)
-        cp omniedge-cli/out/omniedge $(BUILD_DIR)/
+    cp omniedge-cli/out/omniedge $(BUILD_DIR)/
 endef
 
 
