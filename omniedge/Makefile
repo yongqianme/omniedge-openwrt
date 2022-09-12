@@ -53,10 +53,10 @@ define Build/Compile
 endef
 
 
-# define Build/Configure
-# 	true
-# endef
-#$(call GoPackage/Package/Install/Bin,$(1))
+define Build/Configure
+	true
+endef
+
 
 define Package/omniedge/install
 	
@@ -71,5 +71,4 @@ define Package/omniedge/install
 	
 endef
 
-$(eval $(call GoBinPackage,omniedge))
 $(eval $(call BuildPackage,omniedge))
