@@ -1,13 +1,13 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=omniedge
+PKG_NAME:=omniedge-cli
 PKG_VERSION:=$$(OMNIEDGE_VERSION)
 PKG_RELEASE:=$(AUTORELEASE)
 PKG_ARCH:= $$(ARCH)
 
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/omniedgeio/omniedge/tar.gz/$(PKG_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/omniedgeio/omniedge-cli/tar.gz/$(PKG_VERSION)?
 PKG_HASH:=$$(HASH256)
 
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
@@ -48,6 +48,8 @@ define Build/Compile
 	pwd
 	ls $(BUILD_DIR)
 	cd $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+	ls
+	cat internal/make_n2n
 	CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
 	cp out/omniedge $(BUILD_DIR)/omneidge
 endef

@@ -37,7 +37,7 @@ jobs:
 
       - name: prepare for makefile
         run: |
-          wget -O omniedge.tar.gz https://codeload.github.com/omniedgeio/omniedge/tar.gz/v0.2.4?
+          wget -O omniedge.tar.gz https://codeload.github.com/omniedgeio/omniedge-cli/tar.gz/v0.2.4?
           echo "OMNIEDGE_VERSION=v0.2.4" >> $GITHUB_ENV
           echo "ARCH=${{ matrix.target.arch }}" >> $GITHUB_ENV
           echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge.tar.gz)" >> $GITHUB_ENV
