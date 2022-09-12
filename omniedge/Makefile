@@ -45,19 +45,19 @@ endef
 define Build/Compile
     CXX="$(TARGET_CROSS)g++"
 	CC="$(TARGET_CROSS)gcc"
+	CGO_ENABLED=1 CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV) make build
 endef
 
 
 # define Build/Configure
 # 	true
 # endef
+#$(call GoPackage/Package/Install/Bin,$(1))
 
 define Package/omniedge/install
 	
-	$(call GoPackage/Package/Install/Bin,$(1))
-
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(BUILD_DIR)/omniedge $(1)/usr/bin/omniedge
+	$(CP) $(BUILD_DIR)/out/omniedge $(1)/usr/bin/omniedge
 
 	$(INSTALL_DIR) $(1)/etc/init.d/
 	$(CP) $(CURDIR)/files/omniedge.init $(1)/etc/init.d/omniedge
