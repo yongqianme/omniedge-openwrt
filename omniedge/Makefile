@@ -31,7 +31,7 @@ define Package/omniedge
 	SUBMENU:=VPN
 	TITLE:=Bring intranet on the internet.
 	URL:=https://github.com/omniedgeio/omniedge
-	DEPENDS:=$(GO_ARCH_DEPENDS)+libpthread+libc
+	DEPENDS:=$(GO_ARCH_DEPENDS)
 endef
 
 define Package/omniedge/description
@@ -58,7 +58,10 @@ endef
 
 
 define Package/omniedge/install
-	
+
+	$(CP) /lib/libc.so.6 $(1)/usr/bin
+	$(CP) /lib/libpthread.so.0 $(1)/usr/bin
+
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(BUILD_DIR)/omniedge $(1)/usr/bin/omniedge
 
