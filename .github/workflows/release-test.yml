@@ -1,0 +1,76 @@
+name: build openwrt
+on:
+  push:
+    branches:
+      - dev
+    tags: [ 'v*' ]
+  pull_request:
+
+jobs:
+  build-openwrt-1:
+    name: Build openwrt ${{matrix.target.arch}}
+    env:
+      ENVIRONMENT: prod
+    strategy:
+      matrix:
+        target:
+          - arch: "amd64"
+            sdk: "https://downloads.openwrt.org/releases/22.03.0-rc5/targets/x86/64/openwrt-sdk-22.03.0-rc5-x86-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with tag
+        uses: actions/checkout@master
+
+      - name: prepare requirements
+        run: |
+          sudo -E apt-get -y update
+          sudo -E apt-get install -y openssl
+          sudo -E apt-get install -y build-essential
+          sudo -E apt-get install -y libssl-dev
+          sudo -E apt-get install -y zip gzip upx wget make git
+
+      - name: Install OpenWrt SDK
+        run: |
+          wget -O openwrt-sdk.tar.xz ${{ matrix.target.sdk }}
+          xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
+          mv -f openwrt-sdk-* openwrt-sdk
+
+      - name: prepare for makefile
+        run: |
+          wget -O omniedge.tar.gz https://codeload.github.com/omniedgeio/omniedge/tar.gz/v0.2.4?
+          echo "OMNIEDGE_VERSION=v0.2.4" >> $GITHUB_ENV
+          echo "ARCH=${{ matrix.target.arch }}" >> $GITHUB_ENV
+          echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge.tar.gz)" >> $GITHUB_ENV
+          echo "CROSS_OPENWRT=openwrt" >> $GITHUB_ENV
+          echo "BUILD_ENV = ${{env.ENVIRONMENT}}" >> $GITHUB_ENV
+          
+      - name: Build Package
+        run: |
+          echo "src-link omniedge $GITHUB_WORKSPACE" > openwrt-sdk/feeds.conf
+          echo 'CONFIG_PACKAGE_omniedge=y
+          ' >> openwrt-sdk/.config
+          cd openwrt-sdk
+          cat feeds.conf.default >> feeds.conf
+          cat feeds.conf
+          ./scripts/feeds update -a > /dev/null
+          make defconfig
+          ./scripts/feeds install -d y -f -a
+          make package/omniedge/compile V=s
+          tree bin/packages/
+
+      - name: Archive package
+        uses: actions/upload-artifact@v2
+        with:
+          name: omniedge-${{ matrix.target.arch }}
+          path: openwrt-sdk/bin/packages/*/omniedge/omniedge*.ipk
+          if-no-files-found: error
+      
+      - name: Upload package to GitHub Release
+        uses: svenstaro/upload-release-action@v2
+        # if: "startsWith(github.ref, 'refs/tags/')"
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          overwrite: true
+          file: openwrt-sdk/bin/packages/*/omniedge/omniedge*.ipk
+          tag: ${{ github.ref }}
