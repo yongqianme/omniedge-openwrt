@@ -45,11 +45,10 @@ endef
 define Build/Compile
     CXX="$(TARGET_CROSS)g++"
 	CC="$(TARGET_CROSS)gcc"
-	pwd
-	ls $(BUILD_DIR)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
-	cd omniedge-cli && CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
-	ls
+	cd omniedge-cli && ls && CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
+	ls omniedge-cli
+	$(BUILD_DIR)
 endef
 
 
