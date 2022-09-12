@@ -2,7 +2,7 @@ name: build openwrt
 on:
   push:
     branches:
-      - dev
+      - ipk
     tags: [ 'v*' ]
   pull_request:
 
