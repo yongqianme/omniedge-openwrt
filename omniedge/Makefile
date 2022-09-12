@@ -20,7 +20,7 @@ PKG_USE_MIPS16:=0
 GO_PKG:=github.com/omniedgeio/omniedge-cli
 GO_PKG_BUILD_PKG:=github.com/omniedgeio/omniedge-cli/out/omniedge
 GO_PKG_LDFLAGS:=-s -w
-GO_PKG_LDFLAGS_X:=main.Version=v$(PKG_VERSION)
+GO_PKG_LDFLAGS_X:=main.Version=$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
@@ -47,8 +47,9 @@ define Build/Compile
 	CC="$(TARGET_CROSS)gcc"
 	pwd
 	ls $(BUILD_DIR)
-	cd $(BUILD_DIR)
+	cd $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 	CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
+	cp out/omniedge $(BUILD_DIR)/omneidge
 endef
 
 
