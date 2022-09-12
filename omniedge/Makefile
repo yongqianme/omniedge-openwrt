@@ -47,10 +47,9 @@ define Build/Compile
 	CC="$(TARGET_CROSS)gcc"
 	pwd
 	ls $(BUILD_DIR)
-	cd $(BUILD_DIR)/$(PKG_NAME)-0.2.4
-	ls
-	cat internal/make_n2n
-	CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
+	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
+	cd omniedge-cli && CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
+	
 	cp out/omniedge $(BUILD_DIR)/omneidge
 endef
 
