@@ -68,7 +68,6 @@ define Package/omniedge/install
 
 	$(INSTALL_DIR) $(1)/etc/
 	$(CP) $(CURDIR)/files/omniedge $(1)/etc/
-	
 endef
 
 $(eval $(call BuildPackage,omniedge))
