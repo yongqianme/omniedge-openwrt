@@ -28,6 +28,7 @@ jobs:
           sudo -E apt-get install -y build-essential
           sudo -E apt-get install -y libssl-dev
           sudo -E apt-get install -y zip gzip upx wget make git
+          sudo -E apt-get install -y libncurses5 libncurses5-dev unzip gawk zlib1g-dev
 
       - name: Install OpenWrt SDK
         run: |
