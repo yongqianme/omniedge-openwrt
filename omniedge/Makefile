@@ -70,5 +70,4 @@ define Package/omniedge/install
 	$(CP) $(CURDIR)/files/omniedge $(1)/etc/
 endef
 
-	$(eval $(call GoBinPackage,omniedge))
 	$(eval $(call BuildPackage,omniedge))
