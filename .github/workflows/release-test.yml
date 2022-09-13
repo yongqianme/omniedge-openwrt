@@ -44,6 +44,7 @@ jobs:
           echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge.tar.gz)" >> $GITHUB_ENV
           echo "CROSS_OPENWRT=openwrt" >> $GITHUB_ENV
           echo "BUILD_ENV = ${{env.ENVIRONMENT}}" >> $GITHUB_ENV
+          rm omniedge.tar.gz
           
       - name: Build Package
         run: |
@@ -51,7 +52,6 @@ jobs:
           echo 'CONFIG_PACKAGE_omniedge=y
           ' >> openwrt-sdk/.config
           cd openwrt-sdk
-          find . -name libc.provides
           cat feeds.conf.default >> feeds.conf
           cat feeds.conf
           ./scripts/feeds update -a > /dev/null

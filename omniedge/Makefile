@@ -43,8 +43,7 @@ endef
 # endef
 
 define Build/Compile
-	CFLAGS="$(TARGET_CFLAGS)" 
-	LDFLAGS="$(TARGET_LDFLAGS)"
+	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
     GCC="$(TARGET_CROSS)gcc"
 	CXX="$(TARGET_CROSS)g++"
 	CC="$(TARGET_CROSS)gcc"
@@ -52,7 +51,7 @@ define Build/Compile
 	cd omniedge-cli && ls && CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
 	ls omniedge-cli/out
 	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/
-	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
+	
 endef
 
 
