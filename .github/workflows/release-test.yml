@@ -51,6 +51,8 @@ jobs:
           echo 'CONFIG_PACKAGE_omniedge=y
           ' >> openwrt-sdk/.config
           cd openwrt-sdk
+          echo "libc.so.6" >> `find . -name libc.provides`
+          echo "libpthread.so.0" >> `find . -name libc.provides`
           cat feeds.conf.default >> feeds.conf
           cat feeds.conf
           ./scripts/feeds update -a > /dev/null
