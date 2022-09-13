@@ -47,6 +47,7 @@ define Build/Compile
     GCC="$(TARGET_CROSS)gcc"
 	CXX="$(TARGET_CROSS)g++"
 	CC="$(TARGET_CROSS)gcc"
+	echo $(PKG_ARCH)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
 	cd omniedge-cli && ls && CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
 	ls omniedge-cli/out
@@ -61,9 +62,6 @@ endef
 
 
 define Package/omniedge/install
-
-	$(CP) /lib/libc.so.6 $(1)/usr/bin
-	$(CP) /lib/libpthread.so.0 $(1)/usr/bin
 
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(BUILD_DIR)/omniedge $(1)/usr/bin/omniedge
