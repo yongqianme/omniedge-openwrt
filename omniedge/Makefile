@@ -43,8 +43,8 @@ endef
 # endef
 
 define Build/Compile
+
 	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
-    GCC="$(TARGET_CROSS)gcc"
 	CXX="$(TARGET_CROSS)g++"
 	CC="$(TARGET_CROSS)gcc"
 	echo $(PKG_ARCH)
