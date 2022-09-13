@@ -13,7 +13,7 @@ PKG_HASH:=$$(HASH256)
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
 PKG_LICENSE:=GPL-3.0
 
-PKG_BUILD_DEPENDS:=golang/host
+PKG_BUILD_DEPENDS:=golang/host libpthread
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
