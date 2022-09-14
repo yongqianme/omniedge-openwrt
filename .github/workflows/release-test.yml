@@ -22,16 +22,16 @@ jobs:
           #   sdk: "https://archive.openwrt.org/releases/21.02.3/targets/bcm27xx/bcm2711/openwrt-sdk-21.02.3-bcm27xx-bcm2711_gcc-8.4.0_musl.Linux-x86_64.tar.xz"
           # - arch: "arm_cortex-a7_neon-vfpv4"
           #   sdk: "https://archive.openwrt.org/releases/21.02.3/targets/ipq40xx/generic/openwrt-sdk-21.02.3-ipq40xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz"
-          - arch: "arm_cortex-a9"
-            sdk: "https://archive.openwrt.org/releases/21.02.3/targets/bcm53xx/generic/openwrt-sdk-21.02.3-bcm53xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz"
+          # - arch: "arm_cortex-a9"
+          #   sdk: "https://archive.openwrt.org/releases/21.02.3/targets/bcm53xx/generic/openwrt-sdk-21.02.3-bcm53xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz"
           # - arch: "x86_64"
           #   sdk: "https://downloads.openwrt.org/releases/22.03.0-rc5/targets/x86/64/openwrt-sdk-22.03.0-rc5-x86-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz"
           # - arch: "i386_pentium4"
           #   sdk: "https://archive.openwrt.org/releases/21.02.3/targets/x86/generic/openwrt-sdk-21.02.3-x86-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz"  
-          # - arch: "mips"
-          #   sdk: " https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
-          # - arch: "mipsle"
-          #   sdk: "https://downloads.openwrt.org/releases/18.06.9/targets/ramips/mt7621/openwrt-sdk-18.06.9-ramips-mt7621_gcc-7.3.0_musl.Linux-x86_64.tar.xz"
+          - arch: "mips"
+            sdk: " https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
+          - arch: "mipsle"
+            sdk: "https://downloads.openwrt.org/releases/18.06.9/targets/ramips/mt7621/openwrt-sdk-18.06.9-ramips-mt7621_gcc-7.3.0_musl.Linux-x86_64.tar.xz"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout with tag
@@ -64,7 +64,7 @@ jobs:
             arm64|aarch64|aarch64_be|aarch64_generic|aarch64_cortex-a53|aarch64_cortex-a72)
             echo "ARCH_4_GO=arm64" >> $GITHUB_ENV
             ;;
-            arm,armeb|arm_cortex-a7_neon-vfpv4|arm_cortex-a9)
+            arm|armeb|arm_cortex-a7_neon-vfpv4|arm_cortex-a9)
             echo "ARCH_4_GO=arm" >> $GITHUB_ENV
             ;;
             mips|mips64|mips64el)
