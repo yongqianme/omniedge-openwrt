@@ -17,6 +17,8 @@ PKG_BUILD_DEPENDS:=golang/host libpthread
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
+BUILD_COMMAND:= $$(BUILD_STRING_GITHUB)
+
 # GO_PKG:=github.com/omniedgeio/omniedge-cli
 # GO_PKG_BUILD_PKG:=github.com/omniedgeio/omniedge-cli/out/omniedge
 # GO_PKG_LDFLAGS:=-s -w
@@ -47,7 +49,7 @@ define Build/Compile
 	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
 	echo $(PKG_ARCH)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
-	cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
+	cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" $(BUILD_COMMAND)
 	ls omniedge-cli/out
 	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/
 	
