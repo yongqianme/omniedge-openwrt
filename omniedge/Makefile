@@ -26,6 +26,11 @@ BUILD_COMMAND:= $$(BUILD_STRING_GITHUB)
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
+include $(TOPDIR)/feeds/packages/lang/golang/golang-values.mk
+
+MAKE_VARS = \
+GOARCH=$(GO_ARCH)
+
 
 define Package/omniedge
 	SECTION:=net
@@ -48,8 +53,9 @@ define Build/Compile
 
 	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
 	echo $(PKG_ARCH)
+	echo $(GOARCH)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
-	cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$(PKG_ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
+	cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
 	ls omniedge-cli/out
 	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/
 	
