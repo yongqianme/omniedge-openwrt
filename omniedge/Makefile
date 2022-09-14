@@ -13,12 +13,12 @@ PKG_HASH:=$$(HASH256)
 PKG_MAINTAINER:=omniedge <hi@omniedge.io>
 PKG_LICENSE:=GPL-3.0
 
-PKG_BUILD_DEPENDS:=golang/host libpthread
+PKG_BUILD_DEPENDS:=golang/host libpthread 
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
-GO_PKG:=github.com/omniedgeio/omniedge-cli
-GO_PKG_BUILD_PKG:=github.com/omniedgeio/omniedge-cli/out/omniedge
+# GO_PKG:=github.com/omniedgeio/omniedge-cli
+# GO_PKG_BUILD_PKG:=github.com/omniedgeio/omniedge-cli/out/omniedge
 GO_PKG_LDFLAGS:=-s -w
 GO_PKG_LDFLAGS_X:=main.Version=$(PKG_VERSION)
 
