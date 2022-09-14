@@ -48,10 +48,10 @@ define Build/Compile
 	echo $(PKG_ARCH)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
 	if [ $$(MIPSFPU) != "" ]; then
-        cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
+		cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
 	else
 		cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
-    fi
+	fi
 	ls omniedge-cli/out
 	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/
 	
