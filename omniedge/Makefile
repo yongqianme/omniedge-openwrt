@@ -19,8 +19,8 @@ PKG_USE_MIPS16:=0
 
 # GO_PKG:=github.com/omniedgeio/omniedge-cli
 # GO_PKG_BUILD_PKG:=github.com/omniedgeio/omniedge-cli/out/omniedge
-GO_PKG_LDFLAGS:=-s -w
-GO_PKG_LDFLAGS_X:=main.Version=$(PKG_VERSION)
+# GO_PKG_LDFLAGS:=-s -w
+# GO_PKG_LDFLAGS_X:=main.Version=$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
@@ -47,7 +47,11 @@ define Build/Compile
 	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
 	echo $(PKG_ARCH)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
-	cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=amd64 CROSS_OPENWRT=openwrt BUILD_ENV=prod make build
+	@if [ $$(MIPSFPU) != "" ]; then\
+        cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=prod make build ;\
+	@else
+		cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV) make build ;\
+    fi
 	ls omniedge-cli/out
 	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/
 	
