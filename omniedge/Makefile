@@ -3,7 +3,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=omniedge-cli
 PKG_VERSION:=$$(OMNIEDGE_VERSION)
 PKG_RELEASE:=$(AUTORELEASE)
-PKG_ARCH:= $$(ARCH)
+PKG_ARCH:= $$(ARCH_4_GO)
 
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -47,10 +47,10 @@ define Build/Compile
 	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
 	echo $(PKG_ARCH)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
-	@if [ $$(MIPSFPU) != "" ]; then\
-        cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=prod make build ;\
-	@else
-		cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV) make build ;\
+	if [ $$(MIPSFPU) != "" ]; then
+        cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
+	else
+		cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$$(ARCH) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
     fi
 	ls omniedge-cli/out
 	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/

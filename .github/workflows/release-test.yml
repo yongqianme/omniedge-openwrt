@@ -58,23 +58,23 @@ jobs:
         run: |
           case ${{ matrix.target.arch }} in
             x86_64,amd64)
-            echo "ARCH=amd64" >> $GITHUB_ENV
+            echo "ARCH_4_GO=amd64" >> $GITHUB_ENV
             ;;
             386,i386_pentium4)
-            echo "ARCH=386" >> $GITHUB_ENV
+            echo "ARCH_4_GO=386" >> $GITHUB_ENV
             ;;
             arm64,aarch64_generic,aarch64_cortex-a53,aarch64_cortex-a72)
-            echo "ARCH=arm64" >> $GITHUB_ENV
+            echo "ARCH_4_GO=arm64" >> $GITHUB_ENV
             ;;
             arm,arm_cortex-a7_neon-vfpv4,arm_cortex-a9)
-            echo "ARCH=arm64" >> $GITHUB_ENV
+            echo "ARCH_4_GO=arm64" >> $GITHUB_ENV
             ;;
             mips)
-            echo "ARCH=mips" >> $GITHUB_ENV
+            echo "ARCH_4_GO=mips" >> $GITHUB_ENV
             echo "MIPSFPU=softfloat" >> $GITHUB_ENV
             ;;
             mipsle)
-            echo "ARCH=mipsle" >> $GITHUB_ENV
+            echo "ARCH_4_GO=mipsle" >> $GITHUB_ENV
             echo "MIPSFPU=softfloat" >> $GITHUB_ENV
             ;;
           esac
@@ -85,7 +85,7 @@ jobs:
           echo "OMNIEDGE_VERSION=v0.2.4" >> $GITHUB_ENV
           echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge.tar.gz)" >> $GITHUB_ENV
           echo "CROSS_OPENWRT=openwrt" >> $GITHUB_ENV
-          echo "BUILD_ENV = ${{env.ENVIRONMENT}}" >> $GITHUB_ENV
+          echo "BUILD_ENV_GIT = ${{env.ENVIRONMENT}}" >> $GITHUB_ENV
           rm omniedge.tar.gz
           
       - name: Build Package
