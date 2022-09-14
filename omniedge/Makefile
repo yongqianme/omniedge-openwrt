@@ -17,13 +17,6 @@ PKG_BUILD_DEPENDS:=golang/host libpthread
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
-BUILD_COMMAND:= $$(BUILD_STRING_GITHUB)
-
-# GO_PKG:=github.com/omniedgeio/omniedge-cli
-# GO_PKG_BUILD_PKG:=github.com/omniedgeio/omniedge-cli/out/omniedge
-# GO_PKG_LDFLAGS:=-s -w
-# GO_PKG_LDFLAGS_X:=main.Version=$(PKG_VERSION)
-
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
@@ -40,26 +33,12 @@ define Package/omniedge/description
 	Bring everything into intranet.
 endef
 
-# define Build/Compile
-# 	true
-# endef
-
 define Build/Compile
 
-	ls $(TOOLCHAIN_DIR)/lib/lib*.so.*
-	echo $(PKG_ARCH)
 	git clone -b $(PKG_VERSION) https://github.com/omniedgeio/omniedge-cli
 	cd omniedge-cli && ls && CXX="$(TARGET_CROSS)g++" CC="$(TARGET_CROSS)gcc" CGO_ENABLED=1 GOARCH=$(PKG_ARCH) GOMIPS=$$(MIPSFPU) CROSS_OPENWRT=openwrt BUILD_ENV=$$(BUILD_ENV_GIT) make build
-	ls omniedge-cli/out
-	ls $(BUILD_DIR) && cp omniedge-cli/out/omniedge $(BUILD_DIR)/
 	
 endef
-
-
-# define Build/Configure
-# 	true
-# endef
-
 
 define Package/omniedge/install
 

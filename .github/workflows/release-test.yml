@@ -79,8 +79,8 @@ jobs:
 
       - name: prepare for makefile
         run: |
-          wget -O omniedge.tar.gz https://codeload.github.com/omniedgeio/omniedge-cli/tar.gz/v0.2.4?
-          echo "OMNIEDGE_VERSION=v0.2.4" >> $GITHUB_ENV
+          wget -O omniedge.tar.gz https://codeload.github.com/omniedgeio/omniedge-cli/tar.gz/${{ github.ref_name }}?
+          echo "OMNIEDGE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
           echo "HASH256=$(sh -c 'sha256sum < "$1" | cut -d" " -f1' -- omniedge.tar.gz)" >> $GITHUB_ENV
           echo "CROSS_OPENWRT=openwrt" >> $GITHUB_ENV
           echo "BUILD_ENV_GIT = ${{env.ENVIRONMENT}}" >> $GITHUB_ENV
