@@ -128,7 +128,7 @@ jobs:
         target:
           - arch: "mips"
             sdk: "https://downloads.openwrt.org/releases/19.07.9/targets/ar71xx/generic/openwrt-sdk-19.07.9-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
-          - arch: "mipsel"
+          - arch: "mipsle"
             sdk: "https://downloads.openwrt.org/releases/22.03.0/targets/ramips/mt7621/openwrt-sdk-22.03.0-ramips-mt7621_gcc-11.2.0_musl.Linux-x86_64.tar.xz"
     steps:
       - uses: actions/checkout@v2
@@ -142,7 +142,7 @@ jobs:
           wget -O openwrt-sdk.tar.xz ${{ matrix.target.sdk }}
           xz -q -d openwrt-sdk.tar.xz && tar -xvf openwrt-sdk.tar
           mv -f openwrt-sdk-* openwrt-sdk    
-
+  
       - name: download binary
         run: | 
           wget https://github.com/omniedgeio/omniedge/releases/download/${{ github.ref_name }}/omniedge-${{ github.ref_name }}-openwrt-${{ matrix.target.arch }}.zip
