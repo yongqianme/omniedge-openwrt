@@ -4,7 +4,7 @@ OpenWrt package for [omniedge](https://github.com/omniedgeio/omniedge)
 
 ## Usage
 
-1. Download ipk releasted to your arch, and copy it to your router
+1. Download ipk related to your arch, and copy it to your router
 2. Install it by running `opkg install omniedge*.ipk`
 3. Generate Security-key, and get the Virtual Network ID from [Dashboard](https://omniedge.io/dashboard)
 4. Add your Security key and virtual network id to `/etc/init.d/omniedge`:
