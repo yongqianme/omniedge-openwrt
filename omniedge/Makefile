@@ -5,7 +5,7 @@ PKG_VERSION:=$$(OMNIEDGE_VERSION)
 PKG_RELEASE:=$(AUTORELEASE)
 PKG_ARCH:= $$(ARCH)
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-openwrt-$(PKG_ARCH).zip
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-openwrt-$$(ARCH).zip
 PKG_SOURCE_URL:=https://github.com/omniedgeio/omniedge-cli/releases/download/${PKG_VERSION}
 PKG_HASH:=$$(HASH256)
 
